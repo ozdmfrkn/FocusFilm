@@ -83,5 +83,3 @@ Sistemin REST API uç noktalarını Postman üzerinden test etmek için, istekle
 * **Metot:** DELETE
 * **URL:** `http://localhost:8080/api/movies/1` *(1: Silinecek ID)*
 
----
-*Not: Proje kodlarında hocamızın isterleri doğrultusunda hiçbir açıklama/yorum satırına yer verilmemiş olup, sistemin tüm mimari işleyişi Yönetim Bilişim Sistemleri proje sunumu esnasında sözlü olarak detaylandırılacaktır.*
