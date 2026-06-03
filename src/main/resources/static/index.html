@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>FocusFilm - Panel</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: linear-gradient(rgba(20, 20, 20, 0.85), rgba(20, 20, 20, 0.85)), url('arkaplann.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            padding: 0;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+        .brand {
+            color: #E50914;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .logout-btn {
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .logout-btn:hover {
+            background-color: #fff;
+            color: #000;
+        }
+        .main-container {
+            padding: 40px;
+            display: flex;
+            gap: 40px;
+        }
+        .form-section {
+            flex: 1;
+            background-color: rgba(34, 34, 34, 0.9);
+            padding: 30px;
+            border-radius: 8px;
+            height: fit-content;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 40px;
+        }
+        .form-section h3 { margin-top: 0; border-bottom: 2px solid #E50914; padding-bottom: 10px; }
+        .form-section input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 4px;
+            background-color: #333;
+            color: white;
+            box-sizing: border-box;
+        }
+        .save-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #E50914;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        .save-btn:hover { opacity: 0.8; }
+
+        .list-section { flex: 2; }
+        .list-section h3 { margin-top: 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .movie-card {
+            background-color: rgba(34, 34, 34, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            border-top: 3px solid transparent;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .movie-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+            border-top: 3px solid #E50914;
+            z-index: 2;
+        }
+        .movie-title { font-size: 20px; font-weight: bold; margin: 0 0 10px 0; }
+        .movie-meta { font-size: 13px; color: #aaa; margin-bottom: 15px; flex-grow: 1; }
+        .imdb-badge {
+            background-color: #f5c518;
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        /* Buton Grupları */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .edit-btn, .del-btn {
+            flex: 1;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+            border: 1px solid;
+            background-color: transparent;
+        }
+        .edit-btn {
+            color: #f5c518;
+            border-color: #f5c518;
+        }
+        .edit-btn:hover { background-color: #f5c518; color: #000; }
+
+        .del-btn {
+            color: #E50914;
+            border-color: #E50914;
+        }
+        .del-btn:hover { background-color: #E50914; color: white; }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <div class="brand">🎬 FocusFilm</div>
+    <form action="/logout" method="POST" style="margin: 0;">
+        <button type="submit" class="logout-btn">Oturumu Kapat</button>
+    </form>
+</div>
+
+<div class="main-container">
+    <div class="form-section">
+        <h3 id="formTitle">Kataloğa Ekle</h3>
+        <form id="movieForm">
+            <input type="text" id="filmAdi" placeholder="Film Adı" required>
+            <input type="number" id="cikisYili" placeholder="Çıkış Yılı (Örn: 2014)" required>
+            <input type="text" id="kategori" placeholder="Kategori (Aksiyon, Bilim vb.)" required>
+            <input type="text" id="yonetmen" placeholder="Yönetmen" required>
+            <input type="number" step="0.1" id="imdbPuani" placeholder="IMDB Puanı (1.0 - 10.0)" required>
+            <button type="submit" id="submitBtn" class="save-btn">Sisteme Yükle</button>
+            <button type="button" id="cancelBtn" class="edit-btn" style="display: none; margin-top: 10px; width: 100%;">İptal Et</button>
+        </form>
+    </div>
+
+    <div class="list-section">
+        <h3>İçerikler</h3>
+        <div id="movieList" class="movies-grid"></div>
+    </div>
+</div>
+
+<script>
+    let currentEditId = null; // Güncellenecek filmin ID'sini tutacak
+
+    function fetchMovies() {
+        fetch('/api/movies')
+            .then(response => response.json())
+            .then(data => {
+                const list = document.getElementById('movieList');
+                list.innerHTML = '';
+                data.forEach(movie => {
+                    list.innerHTML += `
+                        <div class="movie-card">
+                            <div>
+                                <h4 class="movie-title">${movie.filmAdi}</h4>
+                                <div class="movie-meta">
+                                    <span class="imdb-badge">IMDB ${movie.imdbPuani}</span> • ${movie.cikisYili} <br><br>
+                                    <b>Kategori:</b> ${movie.kategori} <br>
+                                    <b>Yönetmen:</b> ${movie.yonetmen}
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="edit-btn" onclick="startEdit(${movie.id})">Düzenle</button>
+                                <button class="del-btn" onclick="deleteMovie(${movie.id})">Sil</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+    }
+
+    // Düzenle butonuna basıldığında formu doldurma işlemi
+    function startEdit(id) {
+        fetch('/api/movies/' + id)
+            .then(res => res.json())
+            .then(movie => {
+                currentEditId = movie.id;
+                document.getElementById('filmAdi').value = movie.filmAdi;
+                document.getElementById('cikisYili').value = movie.cikisYili;
+                document.getElementById('kategori').value = movie.kategori;
+                document.getElementById('yonetmen').value = movie.yonetmen;
+                document.getElementById('imdbPuani').value = movie.imdbPuani;
+
+                // Formun tasarımını güncelleme moduna alıyoruz
+                document.getElementById('formTitle').innerText = "Filmi Güncelle";
+                const submitBtn = document.getElementById('submitBtn');
+                submitBtn.innerText = "Değişiklikleri Kaydet";
+                submitBtn.style.backgroundColor = "#f5c518";
+                submitBtn.style.color = "#000";
+
+                document.getElementById('cancelBtn').style.display = "block"; // İptal butonunu göster
+            });
+    }
+
+    // İptal butonuna basıldığında veya işlem bitince formu eski haline döndürme
+    function resetForm() {
+        currentEditId = null;
+        document.getElementById('movieForm').reset();
+        document.getElementById('formTitle').innerText = "Kataloğa Ekle";
+
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.innerText = "Sisteme Yükle";
+        submitBtn.style.backgroundColor = "#E50914";
+        submitBtn.style.color = "#fff";
+
+        document.getElementById('cancelBtn').style.display = "none";
+    }
+
+    document.getElementById('cancelBtn').addEventListener('click', resetForm);
+
+    document.getElementById('movieForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const movie = {
+            filmAdi: document.getElementById('filmAdi').value,
+            cikisYili: parseInt(document.getElementById('cikisYili').value),
+            kategori: document.getElementById('kategori').value,
+            yonetmen: document.getElementById('yonetmen').value,
+            imdbPuani: parseFloat(document.getElementById('imdbPuani').value)
+        };
+
+        // Eğer currentEditId doluysa PUT (Güncelle), boşsa POST (Ekle) atacak
+        const method = currentEditId ? 'PUT' : 'POST';
+        const url = currentEditId ? '/api/movies/' + currentEditId : '/api/movies';
+
+        fetch(url, {
+            method: method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(movie)
+        }).then(response => {
+            if (response.ok) {
+                fetchMovies();
+                resetForm(); // İşlem bitince formu sıfırla
+            } else {
+                alert("Hata! Yetkiniz yok veya kurallara uymadınız (Örn: Yıl min 1888, Puan 1-10 arası olmalı).");
+            }
+        });
+    });
+
+    function deleteMovie(id) {
+        if(confirm("Bu filmi veritabanından kalıcı olarak silmek istiyor musunuz?")) {
+            fetch('/api/movies/' + id, { method: 'DELETE' })
+                .then(response => {
+                    if (response.ok) fetchMovies();
+                    else alert("Yetki Hatası (403): İzleyici rolü film silemez!");
+                });
+        }
+    }
+
+    fetchMovies();
+</script>
+</body>
+</html>

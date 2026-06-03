@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>FocusFilm - Sisteme Giriş</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            /* Arkaplan resmi ve karanlık sinema filtresi eklendi */
+            background: linear-gradient(rgba(20, 20, 20, 0.8), rgba(20, 20, 20, 0.8)), url('arkaplann.png') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        .login-container {
+            background-color: rgba(0, 0, 0, 0.85); /* Arkaplan resminde form daha net okunsun diye hafif koyulaştırıldı */
+            padding: 60px 68px 40px;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 320px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.8);
+            border-top: 4px solid #E50914; /* Sinematik Kırmızı */
+        }
+        .login-container h2 {
+            margin: 0 0 28px 0;
+            font-size: 32px;
+            font-weight: 700;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #333;
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .login-container input:focus {
+            outline: none;
+            background-color: #444;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 16px;
+            background-color: #E50914;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 24px;
+            transition: background-color 0.2s;
+        }
+        .login-container button:hover {
+            background-color: #f40612;
+        }
+        .brand-logo {
+            color: #E50914;
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <div class="brand-logo">🎬 FOCUSFILM</div>
+    <h2>Oturum Aç</h2>
+    <form action="/login" method="POST">
+        <input type="text" name="username" placeholder="Kullanıcı Adı veya E-posta" required>
+        <input type="password" name="password" placeholder="Parola" required>
+        <button type="submit">Giriş Yap</button>
+    </form>
+</div>
+</body>
+</html>
